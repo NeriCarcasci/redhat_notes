@@ -1,0 +1,74 @@
+---
+type: map
+status: growing
+created: 2026-07-31
+updated: 2026-07-31
+---
+
+# PostgreSQL trace analytics optimization
+
+Technical map for [[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]].
+
+## Storage and authority
+
+- [[Entity-attribute-value model]] — current metric, tag, metadata, and dimension storage.
+- [[Database denormalization]] — dedicated hot fields on `trace_info`, `spans`, and `assessments`.
+- [[Authoritative data representation]] — stored columns as authority with synthesized compatibility views.
+- [[Backward compatibility]] — legacy API shapes and downgrade reconstruction.
+
+## Raw query path
+
+- [[Database index]] — assessment, span-cost, and rollup lookup access paths.
+- [[Query execution plan]] — PostgreSQL trace-first planning and the materialized trace-ID CTE.
+
+## Rollup path
+
+- [[Database rollup table]] — daily trace, span-cost, and assessment aggregates.
+- [[Percentile aggregation]] — exactness and the non-composability of daily percentile values.
+- [[Rollup invalidation]] — durable partition invalidation, locking, publication, and raw fallback.
+
+## Migration path
+
+- [[Online schema migration]] — schema expansion, preparation, authoritative switch, and cleanup.
+- [[Database backfill]] — historical derivation and live prepopulation.
+- [[Keyset pagination]] — stable traversal for bounded updates.
+- [[Transaction boundary]] — per-batch atomicity and operational load control.
+- [[Idempotency]] — restart and catch-up semantics.
+- [[Data migration validation]] — batch and global invariants before cleanup.
+
+## System relationships
+
+```mermaid
+flowchart TD
+    EAV["EAV and JSON source representation"] --> DEN["Denormalized authoritative columns"]
+    DEN --> RAW["Indexed raw analytics"]
+    RAW --> PLAN["PostgreSQL trace-first plan"]
+    DEN --> BUILD["Daily partition builder"]
+    BUILD --> ROLL["Rollup tables"]
+    WRITE["Late or corrective write"] --> INVALID["Durable rebuild queue"]
+    INVALID --> FALLBACK["Raw-query fallback"]
+    INVALID --> BUILD
+    MIG["Single migration"] --> DEN
+    PRE["Live prepopulation"] --> MIG
+```
+
+## Delivery graph
+
+```mermaid
+flowchart LR
+    M["78202 Migration"] --> RW["78199 Reads and writes"]
+    M --> PRE["78198 Prepopulation"]
+    RW --> R["78201 Rollups"]
+    R --> O["78203 Operator"]
+    O --> B["78200 Benchmarks"]
+    PRE --> D["78204 Documentation"]
+    O --> D
+```
+
+## Unresolved design boundaries
+
+- Server-side caps for expensive raw query shapes.
+- Source-row guard behavior for exact assessment distributions.
+- Multi-replica rollup scheduling after RFC 0002.
+- Production RHOAI performance and maintenance characteristics.
+

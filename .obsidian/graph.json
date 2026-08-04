@@ -1,0 +1,44 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": true,
+  "colorGroups": [
+    {
+      "query": "path:Concepts  ",
+      "color": {
+        "a": 1,
+        "rgb": 8433919
+      }
+    },
+    {
+      "query": "path:Tasks  ",
+      "color": {
+        "a": 1,
+        "rgb": 16364847
+      }
+    },
+    {
+      "query": "path:Maps  ",
+      "color": {
+        "a": 1,
+        "rgb": 11392604
+      }
+    }
+  ],
+  "collapse-display": true,
+  "showArrow": true,
+  "textFadeMultiplier": -1.8,
+  "nodeSizeMultiplier": 1.757578125,
+  "lineSizeMultiplier": 0.563415798611111,
+  "collapse-forces": true,
+  "centerStrength": 0.352821180555556,
+  "repelStrength": 7.88541666666667,
+  "linkStrength": 0.825564236111111,
+  "linkDistance": 103,
+  "scale": 1.2277394330223648,
+  "close": false
+}
