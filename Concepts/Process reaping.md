@@ -15,7 +15,7 @@ tags:
 # Process reaping
 
 > [!definition]
-> Process reaping is the act of a parent collecting the termination status of a [[Child process|child]], usually with a wait operation.
+> Process reaping is the act of a parent collecting the termination status of a [child](Child%20process.md), usually with a wait operation.
 
 Exiting and being fully removed are separate steps on POSIX systems:
 
@@ -27,7 +27,7 @@ stateDiagram-v2
     Reaped --> [*]
 ```
 
-A child that has exited but has not been waited for is a **zombie process**. It no longer runs code, but the kernel retains a small record containing its [[Process ID|PID]] and exit status so the parent can inspect it.
+A child that has exited but has not been waited for is a **zombie process**. It no longer runs code, but the kernel retains a small record containing its [PID](Process%20ID.md) and exit status so the parent can inspect it.
 
 ## Python interfaces
 
@@ -53,28 +53,28 @@ If stdout or stderr are pipes, blindly waiting can deadlock when the child fills
 
 These operations solve different problems:
 
-- A [[Unix signal]] asks or forces a process to stop.
-- [[POSIX process groups]] let one signal reach related descendants.
+- A [Unix signal](Unix%20signal.md) asks or forces a process to stop.
+- [POSIX process groups](POSIX%20process%20groups.md) let one signal reach related descendants.
 - Reaping collects the direct child's exit status after it stops.
 
 Even after signaling an entire process group, the executor should still wait for the `Popen` object it created.
 
 ## Concurrency complication
 
-`poll()` can reap an already-finished child. That is usually useful, but a lifecycle controller must consider what happens between checking completion and signaling. Once the child has been reaped, its numeric PID may become available for [[PID reuse]], creating a [[TOCTOU race]] if the code later acts on the stale number.
+`poll()` can reap an already-finished child. That is usually useful, but a lifecycle controller must consider what happens between checking completion and signaling. Once the child has been reaped, its numeric PID may become available for [PID reuse](PID%20reuse.md), creating a [TOCTOU race](TOCTOU%20race.md) if the code later acts on the stale number.
 
 ## In the MLflow work
 
-[[2026-07-28 - Implement LocalJobExecutor]] signals the job's process group and then reaps the direct child. Its coordination deliberately avoids turning `poll()` into a separate unsafe check before group signaling.
+[2026-07-28 - Implement LocalJobExecutor](../Tasks/2026-07-28%20-%20Implement%20LocalJobExecutor.md) signals the job's process group and then reaps the direct child. Its coordination deliberately avoids turning `poll()` into a separate unsafe check before group signaling.
 
 ## Related concepts
 
-- [[Process]]
-- [[Child process]]
-- [[Process ID]]
-- [[Unix signal]]
-- [[POSIX process groups]]
-- [[PID reuse]]
+- [Process](Process.md)
+- [Child process](Child%20process.md)
+- [Process ID](Process%20ID.md)
+- [Unix signal](Unix%20signal.md)
+- [POSIX process groups](POSIX%20process%20groups.md)
+- [PID reuse](PID%20reuse.md)
 
 ## Further reading
 

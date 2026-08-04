@@ -14,14 +14,14 @@ tags:
 > [!definition]
 > Authorization decides whether an authenticated principal may perform a particular action on a resource.
 
-It answers “are you allowed?” after [[Authentication]] establishes identity.
+It answers “are you allowed?” after [Authentication](Authentication.md) establishes identity.
 
-When creating [[Presigned URLs]], the server should authorize the exact artifact operation and sign only that bounded method, path, and lifetime. [[Fallback behavior]] must not route around the same policy through an older endpoint.
+When creating [Presigned URLs](Presigned%20URLs.md), the server should authorize the exact artifact operation and sign only that bounded method, path, and lifetime. [Fallback behavior](Fallback%20behavior.md) must not route around the same policy through an older endpoint.
 
 ## Related concepts
 
-- [[Authentication]]
-- [[Presigned URLs]]
-- [[Fallback behavior]]
-- [[Capability]]
+- [Authentication](Authentication.md)
+- [Presigned URLs](Presigned%20URLs.md)
+- [Fallback behavior](Fallback%20behavior.md)
+- [Capability](Capability.md)
 

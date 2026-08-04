@@ -91,7 +91,7 @@ Indexes impose:
 - page splits and vacuum/maintenance work;
 - planner complexity and potentially incorrect choices under stale statistics.
 
-Verification requires a representative [[Query execution plan]], not just index existence. For PostgreSQL, `EXPLAIN (ANALYZE, BUFFERS)` establishes whether the index is selected, how many rows are visited, whether base-table fetches occur, and whether estimates match actual cardinality.
+Verification requires a representative [Query execution plan](Query%20execution%20plan.md), not just index existence. For PostgreSQL, `EXPLAIN (ANALYZE, BUFFERS)` establishes whether the index is selected, how many rows are visited, whether base-table fetches occur, and whether estimates match actual cardinality.
 
 ## Boundaries and pitfalls
 
@@ -104,15 +104,15 @@ Verification requires a representative [[Query execution plan]], not just index 
 
 ## In the work
 
-[[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]] adds targeted indexes only for assessment, span-cost, and rollup access paths. It explicitly rejects a broad `trace_info` covering index because the existing experiment/time path remains the initial trace restriction and no broader index was justified by the benchmark.
+[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization](../Tasks/2026-07-31%20-%20Implement%20RFC%200006%20PostgreSQL%20trace%20analytics%20optimization.md) adds targeted indexes only for assessment, span-cost, and rollup access paths. It explicitly rejects a broad `trace_info` covering index because the existing experiment/time path remains the initial trace restriction and no broader index was justified by the benchmark.
 
 ## Related concepts
 
-- [[Query execution plan]]
-- [[Database denormalization]]
-- [[Entity-attribute-value model]]
-- [[Keyset pagination]]
-- [[Database rollup table]]
+- [Query execution plan](Query%20execution%20plan.md)
+- [Database denormalization](Database%20denormalization.md)
+- [Entity-attribute-value model](Entity-attribute-value%20model.md)
+- [Keyset pagination](Keyset%20pagination.md)
+- [Database rollup table](Database%20rollup%20table.md)
 
 ## Further reading
 

@@ -25,7 +25,7 @@ flowchart LR
     C --> V["Validate copy against canonical value"]
 ```
 
-The central obligation is not merely adding a column. Every creation, update, import, restoration, and historical [[Database backfill|backfill]] must preserve the relationship between the source value and its copy.
+The central obligation is not merely adding a column. Every creation, update, import, restoration, and historical [backfill](Database%20backfill.md) must preserve the relationship between the source value and its copy.
 
 ## Concrete example
 
@@ -41,7 +41,7 @@ An analytics query grouping traces by user must join and filter the metadata tab
 traces(id=42, user_id="ana")
 ```
 
-Now `user_id` can have a targeted [[Database index]], and the common query reads the trace table directly. The metadata record may remain the compatibility source during rollout.
+Now `user_id` can have a targeted [Database index](Database%20index.md), and the common query reads the trace table directly. The metadata record may remain the compatibility source during rollout.
 
 ## Boundaries and pitfalls
 
@@ -49,19 +49,19 @@ Now `user_id` can have a targeted [[Database index]], and the common query reads
 - A copied value can become stale if one write path forgets to maintain it.
 - Faster reads usually mean additional write work, index maintenance, storage, and replication traffic.
 - A column alone does not guarantee a better plan; selectivity, indexes, statistics, and query shape still matter.
-- Denormalization is different from a [[Database rollup table]]: a copied row-level fact preserves granularity, while a rollup stores an aggregate such as a daily count.
+- Denormalization is different from a [Database rollup table](Database%20rollup%20table.md): a copied row-level fact preserves granularity, while a rollup stores an aggregate such as a daily count.
 
 ## In the work
 
-RFC 0006 uses denormalization to move frequently queried trace, span, and assessment attributes out of generic metadata/tag joins and onto their owning rows. In [[2026-07-31 - Prepopulate denormalized trace analytics]], the utility's job is to create those copies for historical data before the final schema upgrade.
+RFC 0006 uses denormalization to move frequently queried trace, span, and assessment attributes out of generic metadata/tag joins and onto their owning rows. In [2026-07-31 - Prepopulate denormalized trace analytics](../Tasks/2026-07-31%20-%20Prepopulate%20denormalized%20trace%20analytics.md), the utility's job is to create those copies for historical data before the final schema upgrade.
 
 ## Related concepts
 
-- [[Entity-attribute-value model]]
-- [[Database index]]
-- [[Database backfill]]
-- [[Data migration validation]]
-- [[Database rollup table]]
+- [Entity-attribute-value model](Entity-attribute-value%20model.md)
+- [Database index](Database%20index.md)
+- [Database backfill](Database%20backfill.md)
+- [Data migration validation](Data%20migration%20validation.md)
+- [Database rollup table](Database%20rollup%20table.md)
 
 ## Further reading
 

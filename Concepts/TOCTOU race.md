@@ -22,12 +22,12 @@ check(resource)
 use(resource)
 ```
 
-Examples include checking a path before opening it or checking a [[Process ID]] before signaling it after [[PID reuse]]. Prefer an atomic operation, stable handle, or [[Mutual exclusion]] that covers both validation and use.
+Examples include checking a path before opening it or checking a [Process ID](Process%20ID.md) before signaling it after [PID reuse](PID%20reuse.md). Prefer an atomic operation, stable handle, or [Mutual exclusion](Mutual%20exclusion.md) that covers both validation and use.
 
 ## Related concepts
 
-- [[Race condition]]
-- [[PID reuse]]
-- [[Atomic filesystem operation]]
-- [[Mutual exclusion]]
+- [Race condition](Race%20condition.md)
+- [PID reuse](PID%20reuse.md)
+- [Atomic filesystem operation](Atomic%20filesystem%20operation.md)
+- [Mutual exclusion](Mutual%20exclusion.md)
 

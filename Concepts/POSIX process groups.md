@@ -14,9 +14,9 @@ tags:
 # POSIX process groups
 
 > [!definition]
-> A POSIX process group is a collection of related [[Process|processes]] that the operating system can address with one [[Unix signal|signal]]. The group is identified by a process-group ID, or PGID.
+> A POSIX process group is a collection of related [processes](Process.md) that the operating system can address with one [signal](Unix%20signal.md). The group is identified by a process-group ID, or PGID.
 
-Every process has a [[Process ID|PID]] and belongs to exactly one process group. A process-group leader has `PID == PGID`. A new [[Child process|child process]] normally inherits its parent's group.
+Every process has a [PID](Process%20ID.md) and belongs to exactly one process group. A process-group leader has `PID == PGID`. A new [child process](Child%20process.md) normally inherits its parent's group.
 
 ## Why groups matter
 
@@ -33,7 +33,7 @@ flowchart TD
     J --> W2
 ```
 
-Sending a signal to PID `4100` targets only the job leader. Sending it to PGID `4100` targets all three members. This is why process groups are useful for shells, terminal job control, and executors such as [[2026-07-28 - Implement LocalJobExecutor]].
+Sending a signal to PID `4100` targets only the job leader. Sending it to PGID `4100` targets all three members. This is why process groups are useful for shells, terminal job control, and executors such as [2026-07-28 - Implement LocalJobExecutor](../Tasks/2026-07-28%20-%20Implement%20LocalJobExecutor.md).
 
 ## Python example
 
@@ -55,15 +55,15 @@ os.killpg(process.pid, signal.SIGTERM)
 process.wait()
 ```
 
-`start_new_session=True` asks the child to call `setsid()` before executing the program. That makes it the leader of a new [[POSIX session]] and a new process group. `os.killpg()` sends the signal to the group.
+`start_new_session=True` asks the child to call `setsid()` before executing the program. That makes it the leader of a new [POSIX session](POSIX%20session.md) and a new process group. `os.killpg()` sends the signal to the group.
 
 ## Boundaries
 
 - This is POSIX behavior; Windows uses different process-management mechanisms.
 - A descendant can escape by creating another session or changing its process group.
-- The parent still owns only its direct child and must perform [[Process reaping]].
-- A numeric PGID can later be reused, so signaling must account for [[PID reuse]].
-- A group handles *which processes receive a signal*. It does not decide the correct terminal job state; that belongs to [[Cancellation races|cancellation semantics]].
+- The parent still owns only its direct child and must perform [Process reaping](Process%20reaping.md).
+- A numeric PGID can later be reused, so signaling must account for [PID reuse](PID%20reuse.md).
+- A group handles *which processes receive a signal*. It does not decide the correct terminal job state; that belongs to [cancellation semantics](Cancellation%20races.md).
 
 ## In the MLflow work
 
@@ -71,13 +71,13 @@ The local executor starts both environment-setup commands and final job commands
 
 ## Related concepts
 
-- [[Process]]
-- [[Process ID]]
-- [[Child process]]
-- [[POSIX session]]
-- [[Unix signal]]
-- [[Process reaping]]
-- [[PID reuse]]
+- [Process](Process.md)
+- [Process ID](Process%20ID.md)
+- [Child process](Child%20process.md)
+- [POSIX session](POSIX%20session.md)
+- [Unix signal](Unix%20signal.md)
+- [Process reaping](Process%20reaping.md)
+- [PID reuse](PID%20reuse.md)
 
 ## Further reading
 

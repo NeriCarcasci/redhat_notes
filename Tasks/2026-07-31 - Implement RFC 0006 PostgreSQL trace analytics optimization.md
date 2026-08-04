@@ -83,7 +83,7 @@ Deliver RFC 0006 end to end for RHOAI:
 
 ## Existing query problem
 
-The current schema uses [[Entity-attribute-value model|EAV-style]] metric and metadata tables for flexible writes:
+The current schema uses [EAV-style](../Concepts/Entity-attribute-value%20model.md) metric and metadata tables for flexible writes:
 
 | Data | Current location | Cost on analytics paths |
 | --- | --- | --- |
@@ -142,7 +142,7 @@ Ten columns become first-class analytics fields:
 | `output_cost` | Trace `COST` metadata | `trace_info` | Trace totals and gateway budgets |
 | `total_cost` | Trace `COST` metadata | `trace_info` | Trace totals and gateway budgets |
 
-The five reserved token metric rows are removed after successful migration. Custom trace metrics remain in `trace_metrics`. API responses synthesize the reserved metric and metadata shapes from the columns for [[Backward compatibility]].
+The five reserved token metric rows are removed after successful migration. Custom trace metrics remain in `trace_metrics`. API responses synthesize the reserved metric and metadata shapes from the columns for [Backward compatibility](../Concepts/Backward%20compatibility.md).
 
 Trace-level cost is not interchangeable with span cost. `trace_info` owns reusable per-trace totals and gateway budget accounting. Span columns own model/provider breakdowns.
 
@@ -177,7 +177,7 @@ When a trace changes experiment or timestamp, its denormalized span and assessme
 
 ## Authoritative representation and compatibility
 
-The target is one stored [[Authoritative data representation]] for each reserved field:
+The target is one stored [Authoritative data representation](../Concepts/Authoritative%20data%20representation.md) for each reserved field:
 
 ```mermaid
 flowchart LR
@@ -202,7 +202,7 @@ The change is broader than query retargeting. All supported writes—including s
 | Assessment analytics | Drive from `assessments`, using direct ownership/time columns and `aggregate_value` |
 | Trace-level filters on assessment queries | Apply correlated `EXISTS` predicates only when needed |
 
-PostgreSQL span analytics use a measured trace-first [[Query execution plan]]:
+PostgreSQL span analytics use a measured trace-first [Query execution plan](../Concepts/Query%20execution%20plan.md):
 
 1. split trace-level predicates from span-level predicates;
 2. materialize the filtered trace IDs in a `metric_trace_ids` CTE;
@@ -212,7 +212,7 @@ The `MATERIALIZED` boundary prevents PostgreSQL from inlining the CTE back into 
 
 ## Targeted indexes
 
-RFC 0006 adds narrowly scoped [[Database index|indexes]]:
+RFC 0006 adds narrowly scoped [indexes](../Concepts/Database%20index.md):
 
 | Index | Leading keys | Workload |
 | --- | --- | --- |
@@ -229,7 +229,7 @@ PostgreSQL uses partial predicates and `INCLUDE` columns for cost-bearing spans.
 
 ## Daily rollup subsystem
 
-[[Database rollup table|Daily rollups]] are optional and disabled by default with `MLFLOW_SQL_TRACE_ROLLUPS_ENABLED=false`. They supplement denormalized raw queries; they do not replace them.
+[Daily rollups](../Concepts/Database%20rollup%20table.md) are optional and disabled by default with `MLFLOW_SQL_TRACE_ROLLUPS_ENABLED=false`. They supplement denormalized raw queries; they do not replace them.
 
 ### Tables and supported grouping sets
 
@@ -270,7 +270,7 @@ flowchart TD
     COMBINE --> RESULT["COUNT/SUM/MIN/MAX merge; AVG from total sum/count"]
 ```
 
-The reader splits the range at UTC midnight boundaries, uses rollups only for valid full-day segments, queries raw rows for the remaining disjoint segments, and combines composable aggregates. `AVG` is recomputed as total sum divided by total count. Daily percentiles are not merged into coarser percentiles; see [[Percentile aggregation]].
+The reader splits the range at UTC midnight boundaries, uses rollups only for valid full-day segments, queries raw rows for the remaining disjoint segments, and combines composable aggregates. `AVG` is recomputed as total sum divided by total count. Daily percentiles are not merged into coarser percentiles; see [Percentile aggregation](../Concepts/Percentile%20aggregation.md).
 
 ### Scheduling and partition eligibility
 
@@ -285,7 +285,7 @@ The reader splits the range at UTC midnight boundaries, uses rollups only for va
 
 ### Invalidation and rebuild concurrency
 
-[[Rollup invalidation]] is represented by durable queue-row presence. Any committed mutation that may change an aggregate inserts entries for all affected old and new partitions in the same transaction. This includes backdated traces, trace moves and deletes, reserved-field changes, delayed spans, and assessment changes.
+[Rollup invalidation](../Concepts/Rollup%20invalidation.md) is represented by durable queue-row presence. Any committed mutation that may change an aggregate inserts entries for all affected old and new partitions in the same transaction. This includes backdated traces, trace moves and deletes, reserved-field changes, delayed spans, and assessment changes.
 
 The rebuilder locks a partition's queue row before reading and publishing. A writer affecting the same partition upserts and locks the same row in its source-data transaction. If it races with publication, it waits and leaves an invalidation after the rebuild, preventing stale rollups from being considered valid. Writes to other partitions do not share the lock.
 
@@ -293,16 +293,16 @@ Each rebuild atomically replaces the partition's rollup rows and removes its que
 
 ## Migration and deployment
 
-RFC 0006 uses an [[Online schema migration]] design internally, but the final upgrade still stops old writers during the authoritative schema transition.
+RFC 0006 uses an [Online schema migration](../Concepts/Online%20schema%20migration.md) design internally, but the final upgrade still stops old writers during the authoritative schema transition.
 
 ### Upgrade sequence
 
-1. Optionally run [[2026-07-31 - Prepopulate denormalized trace analytics|RHOAIENG-78198]] while the old MLflow deployment is serving traffic.
+1. Optionally run [RHOAIENG-78198](2026-07-31%20-%20Prepopulate%20denormalized%20trace%20analytics.md) while the old MLflow deployment is serving traffic.
 2. Stop the old server so writes cannot occur during the schema transition.
 3. Deploy the new version and run the single Alembic migration.
 4. Add the columns, rollup tables, rebuild queue, and indexes.
-5. Complete the [[Database backfill]], including any work missed by prepopulation.
-6. Perform [[Data migration validation]].
+5. Complete the [Database backfill](../Concepts/Database%20backfill.md), including any work missed by prepopulation.
+6. Perform [Data migration validation](../Concepts/Data%20migration%20validation.md).
 7. Delete duplicated reserved metrics, tags, and metadata.
 8. Validate that `dimension_attributes` contains only model/provider keys, then drop it.
 9. Start the new server on the authoritative-column implementation.
@@ -401,7 +401,7 @@ These are fixed benchmark results, not production guarantees. Rollup results are
 
 ### Promote only hot, bounded fields
 
-- **Decision:** Use [[Database denormalization]] for fixed high-value fields and leave custom metrics in EAV tables.
+- **Decision:** Use [Database denormalization](../Concepts/Database%20denormalization.md) for fixed high-value fields and leave custom metrics in EAV tables.
 - **Reason:** Dedicated columns and indexes improve measured paths without converting the flexible schema into an unbounded wide table.
 - **Alternative:** A broad covering index or promotion of arbitrary keys increases storage and write cost without a measured workload boundary.
 
@@ -437,18 +437,18 @@ RFC 0006 is represented as one program of schema, application, query-planning, r
 
 ## Concepts encountered
 
-- [[Entity-attribute-value model]] — current flexible storage responsible for the hot join shapes.
-- [[Database denormalization]] — promotes measured analytics fields into dedicated columns.
-- [[Authoritative data representation]] — defines which stored form owns each reserved value after cutover.
-- [[Query execution plan]] — explains the PostgreSQL trace-first materialized-CTE requirement.
-- [[Database index]] — supports assessment, span-cost, and rollup access paths.
-- [[Database rollup table]] — stores bounded daily aggregates for eligible requests.
-- [[Rollup invalidation]] — prevents stale summaries from serving after late or corrective writes.
-- [[Percentile aggregation]] — explains why daily percentiles cannot be combined into larger exact percentiles.
-- [[Online schema migration]] — structures expansion, preparation, switch, cleanup, and downgrade.
-- [[Database backfill]] — derives the new representation for historical rows.
-- [[Data migration validation]] — proves completeness before cleanup and cutover.
-- [[Backward compatibility]] — preserves API-facing legacy shapes while stored authority changes.
+- [Entity-attribute-value model](../Concepts/Entity-attribute-value%20model.md) — current flexible storage responsible for the hot join shapes.
+- [Database denormalization](../Concepts/Database%20denormalization.md) — promotes measured analytics fields into dedicated columns.
+- [Authoritative data representation](../Concepts/Authoritative%20data%20representation.md) — defines which stored form owns each reserved value after cutover.
+- [Query execution plan](../Concepts/Query%20execution%20plan.md) — explains the PostgreSQL trace-first materialized-CTE requirement.
+- [Database index](../Concepts/Database%20index.md) — supports assessment, span-cost, and rollup access paths.
+- [Database rollup table](../Concepts/Database%20rollup%20table.md) — stores bounded daily aggregates for eligible requests.
+- [Rollup invalidation](../Concepts/Rollup%20invalidation.md) — prevents stale summaries from serving after late or corrective writes.
+- [Percentile aggregation](../Concepts/Percentile%20aggregation.md) — explains why daily percentiles cannot be combined into larger exact percentiles.
+- [Online schema migration](../Concepts/Online%20schema%20migration.md) — structures expansion, preparation, switch, cleanup, and downgrade.
+- [Database backfill](../Concepts/Database%20backfill.md) — derives the new representation for historical rows.
+- [Data migration validation](../Concepts/Data%20migration%20validation.md) — proves completeness before cleanup and cutover.
+- [Backward compatibility](../Concepts/Backward%20compatibility.md) — preserves API-facing legacy shapes while stored authority changes.
 
 ## Follow-up
 

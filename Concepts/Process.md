@@ -14,17 +14,17 @@ tags:
 > [!definition]
 > A process is a running program instance together with its address space, open resources, execution state, and operating-system identity.
 
-One program can have many processes. Each has a [[Process ID]], may create a [[Child process]], belongs to a [[POSIX process groups|process group]], and responds to [[Unix signal|signals]] according to the operating system and program.
+One program can have many processes. Each has a [Process ID](Process%20ID.md), may create a [Child process](Child%20process.md), belongs to a [process group](POSIX%20process%20groups.md), and responds to [signals](Unix%20signal.md) according to the operating system and program.
 
 A process can contain multiple threads. Threads share the process's memory and resources; separate processes normally do not.
 
-The process lifetime is not quite finished when its code exits: on POSIX, its parent still performs [[Process reaping]] to collect the exit status.
+The process lifetime is not quite finished when its code exits: on POSIX, its parent still performs [Process reaping](Process%20reaping.md) to collect the exit status.
 
 ## Related concepts
 
-- [[Process ID]]
-- [[Child process]]
-- [[POSIX process groups]]
-- [[POSIX session]]
-- [[Process reaping]]
+- [Process ID](Process%20ID.md)
+- [Child process](Child%20process.md)
+- [POSIX process groups](POSIX%20process%20groups.md)
+- [POSIX session](POSIX%20session.md)
+- [Process reaping](Process%20reaping.md)
 

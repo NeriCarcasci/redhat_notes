@@ -35,7 +35,7 @@ sequenceDiagram
     S-->>U: "Artifact bytes"
 ```
 
-The control plane—the MLflow server—still performs [[Authentication]] and [[Authorization]]. The data plane—the object store—handles the large byte transfer.
+The control plane—the MLflow server—still performs [Authentication](Authentication.md) and [Authorization](Authorization.md). The data plane—the object store—handles the large byte transfer.
 
 ## What is usually bound by the signature
 
@@ -87,16 +87,16 @@ await fetch(url, {
 
 ## Why MLflow needs negotiation
 
-Not every artifact backend can generate signed URLs, and older servers do not advertise them. [[2026-07-26 - Add presigned artifact UI support]] therefore combines presigned transfer with [[Capability negotiation]], [[Fail-fast validation]], and controlled [[Fallback behavior]].
+Not every artifact backend can generate signed URLs, and older servers do not advertise them. [2026-07-26 - Add presigned artifact UI support](../Tasks/2026-07-26%20-%20Add%20presigned%20artifact%20UI%20support.md) therefore combines presigned transfer with [Capability negotiation](Capability%20negotiation.md), [Fail-fast validation](Fail-fast%20validation.md), and controlled [Fallback behavior](Fallback%20behavior.md).
 
 ## Related concepts
 
-- [[Authentication]]
-- [[Authorization]]
-- [[Capability]]
-- [[Capability negotiation]]
-- [[Streaming HTTP downloads]]
-- [[Configuration ownership]]
+- [Authentication](Authentication.md)
+- [Authorization](Authorization.md)
+- [Capability](Capability.md)
+- [Capability negotiation](Capability%20negotiation.md)
+- [Streaming HTTP downloads](Streaming%20HTTP%20downloads.md)
+- [Configuration ownership](Configuration%20ownership.md)
 
 ## Further reading
 

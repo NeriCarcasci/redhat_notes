@@ -44,7 +44,7 @@ The cursor bounds traversal; it does not prove that previously visited rows stay
 
 A backfill reads IDs `1..250`, updates and commits them, then stores `250` as its in-memory cursor. The next query asks for `id > 250 LIMIT 250`. If rows `1..100` are deleted, the next page is unaffected. An offset-based query could shift because its meaning depends on how many earlier rows currently exist.
 
-For durable correctness, the cursor alone is insufficient. If row 100 changes after its batch, a final [[Data migration validation|validation]] or repair pass must rediscover it.
+For durable correctness, the cursor alone is insufficient. If row 100 changes after its batch, a final [validation](Data%20migration%20validation.md) or repair pass must rediscover it.
 
 ## Boundaries and pitfalls
 
@@ -56,15 +56,15 @@ For durable correctness, the cursor alone is insufficient. If row 100 changes af
 
 ## In the work
 
-Revision `75868b020152` uses bounded, key-oriented migration behavior. For [[2026-07-31 - Prepopulate denormalized trace analytics]], keyset pagination is the natural traversal mechanism because it avoids increasingly expensive offsets and creates clear batch boundaries.
+Revision `75868b020152` uses bounded, key-oriented migration behavior. For [2026-07-31 - Prepopulate denormalized trace analytics](../Tasks/2026-07-31%20-%20Prepopulate%20denormalized%20trace%20analytics.md), keyset pagination is the natural traversal mechanism because it avoids increasingly expensive offsets and creates clear batch boundaries.
 
 ## Related concepts
 
-- [[Database backfill]]
-- [[Database index]]
-- [[Transaction boundary]]
-- [[Data migration validation]]
-- [[Idempotency]]
+- [Database backfill](Database%20backfill.md)
+- [Database index](Database%20index.md)
+- [Transaction boundary](Transaction%20boundary.md)
+- [Data migration validation](Data%20migration%20validation.md)
+- [Idempotency](Idempotency.md)
 
 ## Further reading
 

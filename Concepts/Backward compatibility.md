@@ -18,12 +18,12 @@ tags:
 
 In distributed systems, deployment order is rarely perfectly synchronized. A new client may contact an old server, or an old client may contact a new server.
 
-[[Capability negotiation]] and carefully bounded [[Fallback behavior]] support compatibility without guessing. Compatibility does not require preserving every path forever; a server can explicitly require an upgrade and return [[HTTP 426 Upgrade Required]].
+[Capability negotiation](Capability%20negotiation.md) and carefully bounded [Fallback behavior](Fallback%20behavior.md) support compatibility without guessing. Compatibility does not require preserving every path forever; a server can explicitly require an upgrade and return [HTTP 426 Upgrade Required](HTTP%20426%20Upgrade%20Required.md).
 
 ## Related concepts
 
-- [[Capability negotiation]]
-- [[Fallback behavior]]
-- [[HTTP 426 Upgrade Required]]
-- [[Client-server model]]
+- [Capability negotiation](Capability%20negotiation.md)
+- [Fallback behavior](Fallback%20behavior.md)
+- [HTTP 426 Upgrade Required](HTTP%20426%20Upgrade%20Required.md)
+- [Client-server model](Client-server%20model.md)
 

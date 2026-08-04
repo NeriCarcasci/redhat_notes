@@ -15,7 +15,7 @@ updated: 2026-07-31
 
 ## Mental model: atomic unit versus whole operation
 
-A logical operation does not need to be one database transaction. A large [[Database backfill]] can be one logical job composed of thousands of independently committed transactions.
+A logical operation does not need to be one database transaction. A large [Database backfill](Database%20backfill.md) can be one logical job composed of thousands of independently committed transactions.
 
 ```mermaid
 flowchart LR
@@ -28,7 +28,7 @@ flowchart LR
     F3 --> R3["Retry batch 3"]
 ```
 
-This structure sacrifices all-or-nothing behavior for the whole job but bounds the failure and concurrency cost of each unit. [[Idempotency]] and final [[Data migration validation]] provide convergence across batches.
+This structure sacrifices all-or-nothing behavior for the whole job but bounds the failure and concurrency cost of each unit. [Idempotency](Idempotency.md) and final [Data migration validation](Data%20migration%20validation.md) provide convergence across batches.
 
 ## Visibility and concurrency
 
@@ -65,7 +65,7 @@ Batch size should be exposed as an operational control and benchmarked on repres
 
 ## Concrete example: coupled state changes
 
-Some writes must share a boundary because separating them creates an unsafe visible state. RFC 0006 requires a source mutation and its [[Rollup invalidation]] marker to commit together:
+Some writes must share a boundary because separating them creates an unsafe visible state. RFC 0006 requires a source mutation and its [Rollup invalidation](Rollup%20invalidation.md) marker to commit together:
 
 ```text
 BEGIN
@@ -87,15 +87,15 @@ If the source change commits without invalidation, stale rollups may be served. 
 
 ## In the work
 
-[[2026-07-31 - Prepopulate denormalized trace analytics]] uses one transaction per bounded keyset batch. The RFC rollup subsystem uses a different boundary: source mutations and rebuild markers commit together, while partition replacement and marker deletion form another atomic unit.
+[2026-07-31 - Prepopulate denormalized trace analytics](../Tasks/2026-07-31%20-%20Prepopulate%20denormalized%20trace%20analytics.md) uses one transaction per bounded keyset batch. The RFC rollup subsystem uses a different boundary: source mutations and rebuild markers commit together, while partition replacement and marker deletion form another atomic unit.
 
 ## Related concepts
 
-- [[Database backfill]]
-- [[Keyset pagination]]
-- [[Idempotency]]
-- [[Data migration validation]]
-- [[Rollup invalidation]]
+- [Database backfill](Database%20backfill.md)
+- [Keyset pagination](Keyset%20pagination.md)
+- [Idempotency](Idempotency.md)
+- [Data migration validation](Data%20migration%20validation.md)
+- [Rollup invalidation](Rollup%20invalidation.md)
 
 ## Further reading
 

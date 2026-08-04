@@ -22,14 +22,14 @@ Renaming a file within the same filesystem is commonly used to publish completed
 2. flush and close it as required;
 3. rename it over the destination.
 
-Atomic visibility does not necessarily mean [[Durable state|durability]] after a crash. Filesystem, mount, and platform semantics still matter.
+Atomic visibility does not necessarily mean [durability](Durable%20state.md) after a crash. Filesystem, mount, and platform semantics still matter.
 
-This pattern helps [[Crash consistency]] and [[Streaming HTTP downloads]], but cannot safely relocate resources that embed absolute paths.
+This pattern helps [Crash consistency](Crash%20consistency.md) and [Streaming HTTP downloads](Streaming%20HTTP%20downloads.md), but cannot safely relocate resources that embed absolute paths.
 
 ## Related concepts
 
-- [[Crash consistency]]
-- [[Durable state]]
-- [[TOCTOU race]]
-- [[Streaming HTTP downloads]]
+- [Crash consistency](Crash%20consistency.md)
+- [Durable state](Durable%20state.md)
+- [TOCTOU race](TOCTOU%20race.md)
+- [Streaming HTTP downloads](Streaming%20HTTP%20downloads.md)
 

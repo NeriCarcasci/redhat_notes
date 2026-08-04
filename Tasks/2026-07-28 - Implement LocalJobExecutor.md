@@ -43,12 +43,12 @@ Implement the in-process `LocalJobExecutor` described by RFC 0002 for RHOAIENG-5
 
 ## Important decisions
 
-- Signal a job's entire [[POSIX process groups|process group]], not only its direct child process, because job code can create descendants.
-- Keep signaling and job-state inspection coordinated under the executor record lock to reduce [[PID reuse]] hazards.
-- Treat cancellation as a state transition that may lose a [[Cancellation races|cancellation race]] to natural completion; if it loses, return the authoritative completed result.
+- Signal a job's entire [process group](../Concepts/POSIX%20process%20groups.md), not only its direct child process, because job code can create descendants.
+- Keep signaling and job-state inspection coordinated under the executor record lock to reduce [PID reuse](../Concepts/PID%20reuse.md) hazards.
+- Treat cancellation as a state transition that may lose a [cancellation race](../Concepts/Cancellation%20races.md) to natural completion; if it loses, return the authoritative completed result.
 - Keep environment preparation as visible, cancellable executor work instead of hiding it inside the final job command.
 - Build virtual environments at their final path because their files can contain absolute paths and are not reliably relocatable.
-- Use [[File locking]] plus a persistent incomplete marker to make shared setup repairable after cancellation or a crash.
+- Use [File locking](../Concepts/File%20locking.md) plus a persistent incomplete marker to make shared setup repairable after cancellation or a crash.
 - Preserve Huey compatibility by sharing command preparation while allowing Huey to execute setup synchronously.
 - Keep timeout results distinct from user cancellation and include the job ID, function, and configured timeout in the error.
 - Point validation failures to the public `mlflow.server.jobs.job` decorator.
@@ -56,7 +56,7 @@ Implement the in-process `LocalJobExecutor` described by RFC 0002 for RHOAIENG-5
 ## Review-driven risks covered
 
 - Descendant processes surviving cancellation, timeout, shutdown, or recovery.
-- Direct children becoming [[Process reaping|zombie processes]] when their exit status is not collected.
+- Direct children becoming [zombie processes](../Concepts/Process%20reaping.md) when their exit status is not collected.
 - A recycled PID accidentally identifying an unrelated process group.
 - Cancellation racing with process completion.
 - Cancellation during `uv` environment creation leaving a directory that appears valid but is incomplete.
@@ -75,13 +75,13 @@ The implementation and review fixes are pushed as one signed commit. The task re
 
 ## Concepts encountered
 
-- [[POSIX process groups]]
-- [[Process reaping]]
-- [[PID reuse]]
-- [[Cancellation races]]
-- [[File locking]]
-- [[Crash consistency]]
-- [[Idempotent setup]]
+- [POSIX process groups](../Concepts/POSIX%20process%20groups.md)
+- [Process reaping](../Concepts/Process%20reaping.md)
+- [PID reuse](../Concepts/PID%20reuse.md)
+- [Cancellation races](../Concepts/Cancellation%20races.md)
+- [File locking](../Concepts/File%20locking.md)
+- [Crash consistency](../Concepts/Crash%20consistency.md)
+- [Idempotent setup](../Concepts/Idempotent%20setup.md)
 
 ## Follow-up
 

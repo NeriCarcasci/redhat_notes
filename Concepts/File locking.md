@@ -14,7 +14,7 @@ tags:
 # File locking
 
 > [!definition]
-> File locking coordinates access to a file or file-backed resource. It is a form of [[Mutual exclusion]] that can work across separate processes, not only threads inside one process.
+> File locking coordinates access to a file or file-backed resource. It is a form of [Mutual exclusion](Mutual%20exclusion.md) that can work across separate processes, not only threads inside one process.
 
 ## Advisory locking
 
@@ -56,7 +56,7 @@ It does not by itself guarantee:
 - that non-cooperating processes stayed out;
 - that a network filesystem implements identical semantics.
 
-Those are [[Crash consistency]] and storage-protocol concerns.
+Those are [Crash consistency](Crash%20consistency.md) and storage-protocol concerns.
 
 ## Lock scope
 
@@ -71,15 +71,15 @@ Releasing between these steps lets another process observe a state that is neith
 
 ## In the MLflow work
 
-[[2026-07-28 - Implement LocalJobExecutor]] uses a file lock so two jobs do not construct the same environment concurrently. An incomplete marker handles the separate problem of a process dying partway through construction.
+[2026-07-28 - Implement LocalJobExecutor](../Tasks/2026-07-28%20-%20Implement%20LocalJobExecutor.md) uses a file lock so two jobs do not construct the same environment concurrently. An incomplete marker handles the separate problem of a process dying partway through construction.
 
 ## Related concepts
 
-- [[Mutual exclusion]]
-- [[Crash consistency]]
-- [[Idempotent setup]]
-- [[Durable state]]
-- [[Atomic filesystem operation]]
+- [Mutual exclusion](Mutual%20exclusion.md)
+- [Crash consistency](Crash%20consistency.md)
+- [Idempotent setup](Idempotent%20setup.md)
+- [Durable state](Durable%20state.md)
+- [Atomic filesystem operation](Atomic%20filesystem%20operation.md)
 
 ## Further reading
 

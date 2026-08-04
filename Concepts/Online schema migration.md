@@ -27,7 +27,7 @@ stateDiagram-v2
     Switched --> Contracted: remove obsolete form later
 ```
 
-The phases deliberately overlap. During the overlap, software must tolerate mixed state. The more expensive the historical rewrite, the more useful it is to separate that [[Database backfill]] from the short, controlled upgrade step.
+The phases deliberately overlap. During the overlap, software must tolerate mixed state. The more expensive the historical rewrite, the more useful it is to separate that [Database backfill](Database%20backfill.md) from the short, controlled upgrade step.
 
 “Zero downtime” does not mean zero load or zero locking. It means the design keeps disruption within an accepted operational envelope while requests continue.
 
@@ -36,9 +36,9 @@ The phases deliberately overlap. During the overlap, software must tolerate mixe
 For a new `user_id` column derived from a metadata table:
 
 1. Add the nullable column without requiring every historical row to be rewritten immediately.
-2. Deploy code that keeps the new column correct for new or changed rows while retaining [[Backward compatibility]].
+2. Deploy code that keeps the new column correct for new or changed rows while retaining [Backward compatibility](Backward%20compatibility.md).
 3. Populate historical rows in bounded batches.
-4. Run a final migration that catches residual work and performs [[Data migration validation]].
+4. Run a final migration that catches residual work and performs [Data migration validation](Data%20migration%20validation.md).
 5. Switch reads to the new column when its invariant is trustworthy.
 6. Remove compatibility paths only in a later, separately safe phase.
 
@@ -52,15 +52,15 @@ For a new `user_id` column derived from a metadata table:
 
 ## In the work
 
-[[2026-07-31 - Prepopulate denormalized trace analytics]] is the “prepare” phase of an online migration. The prepopulation utility reduces synchronous upgrade work, but the Alembic revision remains responsible for catch-up and validation before the new analytics representation is trusted.
+[2026-07-31 - Prepopulate denormalized trace analytics](../Tasks/2026-07-31%20-%20Prepopulate%20denormalized%20trace%20analytics.md) is the “prepare” phase of an online migration. The prepopulation utility reduces synchronous upgrade work, but the Alembic revision remains responsible for catch-up and validation before the new analytics representation is trusted.
 
 ## Related concepts
 
-- [[Database backfill]]
-- [[Backward compatibility]]
-- [[Idempotency]]
-- [[Transaction boundary]]
-- [[Data migration validation]]
+- [Database backfill](Database%20backfill.md)
+- [Backward compatibility](Backward%20compatibility.md)
+- [Idempotency](Idempotency.md)
+- [Transaction boundary](Transaction%20boundary.md)
+- [Data migration validation](Data%20migration%20validation.md)
 
 ## Further reading
 

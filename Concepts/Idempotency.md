@@ -19,12 +19,12 @@ Mathematically: `f(f(x)) = f(x)`.
 
 “Set status to canceled” can be idempotent; “increment cancellation counter” is not. Idempotency is valuable when a caller cannot tell whether an earlier attempt succeeded and must retry.
 
-It does not mean the operation runs only once, has no cost, or is protected from concurrent execution. [[Idempotent setup]] often also needs [[Mutual exclusion]] and [[Crash consistency]].
+It does not mean the operation runs only once, has no cost, or is protected from concurrent execution. [Idempotent setup](Idempotent%20setup.md) often also needs [Mutual exclusion](Mutual%20exclusion.md) and [Crash consistency](Crash%20consistency.md).
 
 ## Related concepts
 
-- [[Idempotent setup]]
-- [[Mutual exclusion]]
-- [[Crash consistency]]
-- [[Fallback behavior]]
+- [Idempotent setup](Idempotent%20setup.md)
+- [Mutual exclusion](Mutual%20exclusion.md)
+- [Crash consistency](Crash%20consistency.md)
+- [Fallback behavior](Fallback%20behavior.md)
 

@@ -13,7 +13,7 @@ tags:
 # HTTP 426 Upgrade Required
 
 > [!definition]
-> HTTP 426 is an [[HTTP status code]] indicating that the server refuses the request under the current protocol but may accept it after the client upgrades.
+> HTTP 426 is an [HTTP status code](HTTP%20status%20code.md) indicating that the server refuses the request under the current protocol but may accept it after the client upgrades.
 
 RFC 9110 requires a 426 response to include an `Upgrade` header naming acceptable protocols.
 
@@ -57,15 +57,15 @@ The response body should provide an actionable explanation even when automated c
 - ensure clients still receive useful structured error text;
 - avoid applying it to unrelated routes.
 
-In [[2026-07-26 - Add presigned artifact UI support]], only legacy artifact-service upload/download routes return 426. Logged-model and model-version tracking APIs remain available because they are outside that route boundary and lack a replacement in the change.
+In [2026-07-26 - Add presigned artifact UI support](../Tasks/2026-07-26%20-%20Add%20presigned%20artifact%20UI%20support.md), only legacy artifact-service upload/download routes return 426. Logged-model and model-version tracking APIs remain available because they are outside that route boundary and lack a replacement in the change.
 
 ## Related concepts
 
-- [[HTTP status code]]
-- [[Backward compatibility]]
-- [[Capability negotiation]]
-- [[Fallback behavior]]
-- [[Client-server model]]
+- [HTTP status code](HTTP%20status%20code.md)
+- [Backward compatibility](Backward%20compatibility.md)
+- [Capability negotiation](Capability%20negotiation.md)
+- [Fallback behavior](Fallback%20behavior.md)
+- [Client-server model](Client-server%20model.md)
 
 ## Further reading
 

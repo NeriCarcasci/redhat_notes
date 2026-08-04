@@ -15,7 +15,7 @@ updated: 2026-07-31
 
 ## Mental model
 
-SQL defines a result, not a procedural execution order. The optimizer uses table statistics, predicates, available [[Database index|indexes]], estimated row counts, and cost rules to choose a plan.
+SQL defines a result, not a procedural execution order. The optimizer uses table statistics, predicates, available [indexes](Database%20index.md), estimated row counts, and cost rules to choose a plan.
 
 For a trace-filtered span aggregate, two logical options are:
 
@@ -59,14 +59,14 @@ Plan verification should compare `EXPLAIN (ANALYZE, BUFFERS)` output for:
 
 ## In the work
 
-[[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]] requires a PostgreSQL-specific trace-first plan for raw span-cost queries. The RFC explicitly rejects `generate_series + LATERAL` after it performed worse than grouped or parallel scans on the benchmark dataset.
+[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization](../Tasks/2026-07-31%20-%20Implement%20RFC%200006%20PostgreSQL%20trace%20analytics%20optimization.md) requires a PostgreSQL-specific trace-first plan for raw span-cost queries. The RFC explicitly rejects `generate_series + LATERAL` after it performed worse than grouped or parallel scans on the benchmark dataset.
 
 ## Related concepts
 
-- [[Database index]]
-- [[Database denormalization]]
-- [[Database rollup table]]
-- [[Entity-attribute-value model]]
+- [Database index](Database%20index.md)
+- [Database denormalization](Database%20denormalization.md)
+- [Database rollup table](Database%20rollup%20table.md)
+- [Entity-attribute-value model](Entity-attribute-value%20model.md)
 
 ## Further reading
 

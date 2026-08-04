@@ -13,17 +13,17 @@ tags:
 # Child process
 
 > [!definition]
-> A child process is a [[Process]] created by another process, called its parent.
+> A child process is a [Process](Process.md) created by another process, called its parent.
 
-The child receives a new [[Process ID]] and initially inherits selected state such as environment variables, open descriptors, and its parent's [[POSIX process groups|process group]]. The exact inherited state depends on the creation API and operating system.
+The child receives a new [Process ID](Process%20ID.md) and initially inherits selected state such as environment variables, open descriptors, and its parent's [process group](POSIX%20process%20groups.md). The exact inherited state depends on the creation API and operating system.
 
-In Python, `subprocess.Popen(...)` creates and represents a child. The parent is responsible for [[Process reaping|reaping]] that direct child, even if the child creates descendants of its own.
+In Python, `subprocess.Popen(...)` creates and represents a child. The parent is responsible for [reaping](Process%20reaping.md) that direct child, even if the child creates descendants of its own.
 
 ## Related concepts
 
-- [[Process]]
-- [[Process ID]]
-- [[Process reaping]]
-- [[Environment variable]]
-- [[POSIX process groups]]
+- [Process](Process.md)
+- [Process ID](Process%20ID.md)
+- [Process reaping](Process%20reaping.md)
+- [Environment variable](Environment%20variable.md)
+- [POSIX process groups](POSIX%20process%20groups.md)
 

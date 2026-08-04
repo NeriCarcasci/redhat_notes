@@ -38,7 +38,7 @@ concepts:
 
 ## Context
 
-This note covers RHOAIENG-78198 specifically. The complete architecture, seven-story delivery plan, rollup subsystem, and RFC scope are in [[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]]. The canonical concept map for the RFC is [[PostgreSQL trace analytics optimization]]; implementation-specific concepts remain in this task's `Concepts encountered` section.
+This note covers RHOAIENG-78198 specifically. The complete architecture, seven-story delivery plan, rollup subsystem, and RFC scope are in [2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization](2026-07-31%20-%20Implement%20RFC%200006%20PostgreSQL%20trace%20analytics%20optimization.md). The canonical concept map for the RFC is [PostgreSQL trace analytics optimization](../Maps/PostgreSQL%20trace%20analytics%20optimization.md); implementation-specific concepts remain in this task's `Concepts encountered` section.
 
 MLflow's trace analytics queries currently reconstruct commonly filtered and grouped values from normalized tag and metadata tables. RFC 0006 proposes copying hot analytics fields onto the main trace, span, and assessment rows, adding targeted indexes, and optionally maintaining daily rollups. The RFC reports a representative 20-request serial replay improving from 1,891.9 seconds on `master`, to 119.4 seconds with denormalization, and to 36.8 seconds with rollups. These figures are RFC benchmark evidence, not a prediction for every deployment.
 
@@ -182,7 +182,7 @@ Before adding a column or updating a row, the utility verifies:
 - every span and assessment refers to an existing trace;
 - existing `dimension_attributes` contain only the model/provider shapes the migration knows how to preserve.
 
-This is [[Fail-fast validation]]: an unsupported database state is rejected before beginning the long update phase. In particular, dimension data is validated before schema expansion so malformed or unsupported legacy content does not leave an avoidable partial expansion.
+This is [Fail-fast validation](../Concepts/Fail-fast%20validation.md): an unsupported database state is rejected before beginning the long update phase. In particular, dimension data is validated before schema expansion so malformed or unsupported legacy content does not leave an avoidable partial expansion.
 
 ### DDL locking is bounded
 
@@ -214,7 +214,7 @@ flowchart LR
     COMMIT --> NEXT["Advance in-memory keyset cursor"]
 ```
 
-This [[Transaction boundary]] limits lock lifetime, WAL/redo growth, rollback cost, replication bursts, and how much work an interruption can lose. The algorithm does not issue an update for an already-correct row, which reduces write amplification and index maintenance.
+This [Transaction boundary](../Concepts/Transaction%20boundary.md) limits lock lifetime, WAL/redo growth, rollback cost, replication bursts, and how much work an interruption can lose. The algorithm does not issue an update for an already-correct row, which reduces write amplification and index maintenance.
 
 A row can be deleted by the live application after the batch read but before the update. `_execute_updates` accepts a short multi-row update count for this reason instead of treating it as migration corruption. The final migration will evaluate the database that actually remains.
 
@@ -231,7 +231,7 @@ Those operations remain in the final migration after its catch-up and validation
 
 ## Objective 3 — safe interruption and rerun
 
-The utility is restartable because each completed batch commits independently and the transformation has [[Idempotency]]. It is important to distinguish restartability from a persisted checkpoint:
+The utility is restartable because each completed batch commits independently and the transformation has [Idempotency](../Concepts/Idempotency.md). It is important to distinguish restartability from a persisted checkpoint:
 
 - the cursor exists only in process memory;
 - after interruption, a rerun starts each entity scan from the beginning;
@@ -285,7 +285,7 @@ The final migration remains authoritative because it performs the full transitio
 | Row is deleted between read and update | Short update count is tolerated | Deleted row is no longer part of the invariant |
 | Utility stops after only some columns or entities | Existing work remains usable | Missing columns and residual values are completed |
 
-Correctness therefore comes from a defined [[Authoritative data representation]] and final [[Data migration validation]], not from treating the utility's last cursor as proof.
+Correctness therefore comes from a defined [Authoritative data representation](../Concepts/Authoritative%20data%20representation.md) and final [Data migration validation](../Concepts/Data%20migration%20validation.md), not from treating the utility's last cursor as proof.
 
 ### Shared schema, frozen migration semantics
 
@@ -316,14 +316,14 @@ This makes drift fail in tests while preserving migration reproducibility.
 
 ### Commit bounded key ranges
 
-- **Decision:** Use [[Keyset pagination]] over stable entity keys and commit each bounded batch in its own [[Transaction boundary|transaction]].
+- **Decision:** Use [Keyset pagination](../Concepts/Keyset%20pagination.md) over stable entity keys and commit each bounded batch in its own [transaction](../Concepts/Transaction%20boundary.md).
 - **Reason:** This bounds locks, WAL growth, rollback work, and memory while preserving already committed work.
 - **Alternative:** One transaction gives a simple all-or-nothing view, but makes a large live backfill operationally risky. Offset pagination becomes progressively more expensive and is unstable while rows change.
 
 ### Make already-correct rows cheap to revisit
 
 - **Decision:** Updates should be conditional on missing or incorrect derived values and should converge on the same result when repeated.
-- **Reason:** [[Idempotency]] is necessary for safe retries and for the migration to revisit work after the utility stops.
+- **Reason:** [Idempotency](../Concepts/Idempotency.md) is necessary for safe retries and for the migration to revisit work after the utility stops.
 - **Alternative:** Blindly rewriting every row is simpler but causes unnecessary locks, write amplification, index maintenance, and replication traffic.
 
 ### Treat concurrent writes as expected
@@ -381,21 +381,21 @@ The working tree contains two modified files and three new files. The implementa
 
 ## Concepts encountered
 
-- [[Entity-attribute-value model]] — explains why reconstructing hot fields from generic metadata tables makes analytics queries expensive.
-- [[Database denormalization]] — is the RFC's primary read-performance strategy.
-- [[Database index]] — makes the copied fields useful for selective filtering and grouping.
-- [[Database rollup table]] — explains the RFC's optional second optimization for repeated aggregate queries.
-- [[Online schema migration]] — frames how old and new software and data representations coexist during rollout.
-- [[Database backfill]] — is the core operation the utility moves ahead of the upgrade window.
-- [[Keyset pagination]] — provides stable, bounded traversal of a changing table.
-- [[Transaction boundary]] — controls lock duration, recovery granularity, and visibility of each batch.
-- [[Data migration validation]] — distinguishes “the utility finished” from “the database invariant is proven.”
-- [[Idempotency]] — makes retry, catch-up, and partial-state repair safe.
-- [[Backward compatibility]] — matters while rollout code reads or writes data created by different versions.
-- [[Authoritative data representation]] — explains why the final migration, not the utility cursor, resolves disagreement and certifies the new stored form.
-- [[Fail-fast validation]] — applies to revision, source-schema, legacy-data, and DDL-lock checks before or early in the run.
-- [[Environment variable]] — provides the safer `MLFLOW_TRACKING_URI` route for production database configuration.
-- [[Race condition]] — concurrent inserts, updates, and deletes explain why prepopulation alone cannot prove completeness.
+- [Entity-attribute-value model](../Concepts/Entity-attribute-value%20model.md) — explains why reconstructing hot fields from generic metadata tables makes analytics queries expensive.
+- [Database denormalization](../Concepts/Database%20denormalization.md) — is the RFC's primary read-performance strategy.
+- [Database index](../Concepts/Database%20index.md) — makes the copied fields useful for selective filtering and grouping.
+- [Database rollup table](../Concepts/Database%20rollup%20table.md) — explains the RFC's optional second optimization for repeated aggregate queries.
+- [Online schema migration](../Concepts/Online%20schema%20migration.md) — frames how old and new software and data representations coexist during rollout.
+- [Database backfill](../Concepts/Database%20backfill.md) — is the core operation the utility moves ahead of the upgrade window.
+- [Keyset pagination](../Concepts/Keyset%20pagination.md) — provides stable, bounded traversal of a changing table.
+- [Transaction boundary](../Concepts/Transaction%20boundary.md) — controls lock duration, recovery granularity, and visibility of each batch.
+- [Data migration validation](../Concepts/Data%20migration%20validation.md) — distinguishes “the utility finished” from “the database invariant is proven.”
+- [Idempotency](../Concepts/Idempotency.md) — makes retry, catch-up, and partial-state repair safe.
+- [Backward compatibility](../Concepts/Backward%20compatibility.md) — matters while rollout code reads or writes data created by different versions.
+- [Authoritative data representation](../Concepts/Authoritative%20data%20representation.md) — explains why the final migration, not the utility cursor, resolves disagreement and certifies the new stored form.
+- [Fail-fast validation](../Concepts/Fail-fast%20validation.md) — applies to revision, source-schema, legacy-data, and DDL-lock checks before or early in the run.
+- [Environment variable](../Concepts/Environment%20variable.md) — provides the safer `MLFLOW_TRACKING_URI` route for production database configuration.
+- [Race condition](../Concepts/Race%20condition.md) — concurrent inserts, updates, and deletes explain why prepopulation alone cannot prove completeness.
 
 ## Follow-up
 

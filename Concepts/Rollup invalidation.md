@@ -29,7 +29,7 @@ stateDiagram-v2
 
 Queue-row presence is a negative validity signal. A reader can use a rollup partition only when matching aggregate rows exist and no invalidation row exists. This rule turns a crash-resistant database row into a simple routing predicate.
 
-The source mutation and invalidation must share a [[Transaction boundary]]. If source data commits without its marker, readers may serve stale aggregates. If the marker commits without the source change, the result is extra rebuild work but remains correct.
+The source mutation and invalidation must share a [Transaction boundary](Transaction%20boundary.md). If source data commits without its marker, readers may serve stale aggregates. If the marker commits without the source change, the result is extra rebuild work but remains correct.
 
 ## Concrete example
 
@@ -55,15 +55,15 @@ During rebuild, the builder locks the queue row, computes replacement rollups, p
 
 ## In the work
 
-RFC 0006 defines `sql_trace_rollup_rebuild_queue` keyed by workspace, experiment, UTC day, and rollup family. [[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]] requires all application replicas to enqueue invalidations while a single scheduled worker rebuilds partitions.
+RFC 0006 defines `sql_trace_rollup_rebuild_queue` keyed by workspace, experiment, UTC day, and rollup family. [2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization](../Tasks/2026-07-31%20-%20Implement%20RFC%200006%20PostgreSQL%20trace%20analytics%20optimization.md) requires all application replicas to enqueue invalidations while a single scheduled worker rebuilds partitions.
 
 ## Related concepts
 
-- [[Database rollup table]]
-- [[Transaction boundary]]
-- [[Authoritative data representation]]
-- [[Data migration validation]]
-- [[Idempotency]]
+- [Database rollup table](Database%20rollup%20table.md)
+- [Transaction boundary](Transaction%20boundary.md)
+- [Authoritative data representation](Authoritative%20data%20representation.md)
+- [Data migration validation](Data%20migration%20validation.md)
+- [Idempotency](Idempotency.md)
 
 ## Further reading
 

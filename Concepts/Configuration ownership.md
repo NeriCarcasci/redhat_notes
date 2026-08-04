@@ -16,7 +16,7 @@ tags:
 > [!definition]
 > Configuration ownership identifies which component interprets a setting, which behavior it controls, and how other components learn the resulting state.
 
-Shared code does not imply shared configuration. In a [[Client-server model]], client and server may import the same Python package while running in different processes, containers, machines, or organizations.
+Shared code does not imply shared configuration. In a [Client-server model](Client-server%20model.md), client and server may import the same Python package while running in different processes, containers, machines, or organizations.
 
 ## The boundary
 
@@ -34,7 +34,7 @@ flowchart LR
     CE --> CP
 ```
 
-A server-only [[Environment variable]] should configure the server process. If the client needs to adapt, the server communicates a [[Capability]] through the API.
+A server-only [Environment variable](Environment%20variable.md) should configure the server process. If the client needs to adapt, the server communicates a [Capability](Capability.md) through the API.
 
 ## The accidental-coupling bug
 
@@ -80,13 +80,13 @@ This separates:
 
 ## In the MLflow work
 
-[[2026-07-26 - Add presigned artifact UI support]] removed a server-scoped environment variable from Python client decision-making. Clients now rely on `/server-info` [[Capability negotiation]].
+[2026-07-26 - Add presigned artifact UI support](../Tasks/2026-07-26%20-%20Add%20presigned%20artifact%20UI%20support.md) removed a server-scoped environment variable from Python client decision-making. Clients now rely on `/server-info` [Capability negotiation](Capability%20negotiation.md).
 
 ## Related concepts
 
-- [[Environment variable]]
-- [[Client-server model]]
-- [[Capability]]
-- [[Capability negotiation]]
-- [[Backward compatibility]]
+- [Environment variable](Environment%20variable.md)
+- [Client-server model](Client-server%20model.md)
+- [Capability](Capability.md)
+- [Capability negotiation](Capability%20negotiation.md)
+- [Backward compatibility](Backward%20compatibility.md)
 

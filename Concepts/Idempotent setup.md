@@ -16,7 +16,7 @@ tags:
 > [!definition]
 > Idempotent setup is initialization that can be retried without corrupting the result or producing unintended duplicate effects.
 
-It applies the general property of [[Idempotency]] to installation and resource creation.
+It applies the general property of [Idempotency](Idempotency.md) to installation and resource creation.
 
 ## Desired behavior
 
@@ -46,8 +46,8 @@ with setup_lock:
 
 | Concern | Question | Typical mechanism |
 |---|---|---|
-| [[Mutual exclusion]] | Can two actors run setup together? | [[File locking]] |
-| [[Crash consistency]] | Can interrupted work be detected? | marker, journal, transaction |
+| [Mutual exclusion](Mutual%20exclusion.md) | Can two actors run setup together? | [File locking](File%20locking.md) |
+| [Crash consistency](Crash%20consistency.md) | Can interrupted work be detected? | marker, journal, transaction |
 | Idempotency | Can setup safely run again? | validation, repair, replacement |
 
 A lock alone does not make setup idempotent. It can serialize the same destructive mistake.
@@ -63,13 +63,13 @@ A lock alone does not make setup idempotent. It can serialize the same destructi
 
 ## In the MLflow work
 
-In [[2026-07-28 - Implement LocalJobExecutor]], a canceled `uv` setup may leave its final directory behind. The next submission takes the lock, notices the incomplete marker, cleans the partial environment, and prepares it again before launching the job.
+In [2026-07-28 - Implement LocalJobExecutor](../Tasks/2026-07-28%20-%20Implement%20LocalJobExecutor.md), a canceled `uv` setup may leave its final directory behind. The next submission takes the lock, notices the incomplete marker, cleans the partial environment, and prepares it again before launching the job.
 
 ## Related concepts
 
-- [[Idempotency]]
-- [[File locking]]
-- [[Crash consistency]]
-- [[Mutual exclusion]]
-- [[Durable state]]
+- [Idempotency](Idempotency.md)
+- [File locking](File%20locking.md)
+- [Crash consistency](Crash%20consistency.md)
+- [Mutual exclusion](Mutual%20exclusion.md)
+- [Durable state](Durable%20state.md)
 

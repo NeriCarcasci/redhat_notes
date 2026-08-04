@@ -95,19 +95,19 @@ Custom user metrics remain in EAV storage because their names and cardinality ar
 - Encoding values as text makes numeric ordering and range predicates incorrect unless conversion occurs first.
 - EAV makes uniqueness rules such as “one value for this reserved key per entity” depend on composite constraints and application behavior.
 - Promoting every observed key to a column replaces EAV flexibility with uncontrolled schema growth. Promotion should require stable semantics, bounded vocabulary, and measured query value.
-- Cleanup after promotion must preserve one [[Authoritative data representation]]; leaving both representations writable creates divergence.
+- Cleanup after promotion must preserve one [Authoritative data representation](Authoritative%20data%20representation.md); leaving both representations writable creates divergence.
 
 ## In the work
 
-[[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]] retains EAV for custom metrics while promoting reserved token, cost, name, session, model/provider, and assessment-aggregation fields. The decision is driven by query frequency and semantic stability rather than a blanket rejection of EAV.
+[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization](../Tasks/2026-07-31%20-%20Implement%20RFC%200006%20PostgreSQL%20trace%20analytics%20optimization.md) retains EAV for custom metrics while promoting reserved token, cost, name, session, model/provider, and assessment-aggregation fields. The decision is driven by query frequency and semantic stability rather than a blanket rejection of EAV.
 
 ## Related concepts
 
-- [[Database denormalization]]
-- [[Authoritative data representation]]
-- [[Database index]]
-- [[Query execution plan]]
-- [[Database backfill]]
+- [Database denormalization](Database%20denormalization.md)
+- [Authoritative data representation](Authoritative%20data%20representation.md)
+- [Database index](Database%20index.md)
+- [Query execution plan](Query%20execution%20plan.md)
+- [Database backfill](Database%20backfill.md)
 
 ## Further reading
 

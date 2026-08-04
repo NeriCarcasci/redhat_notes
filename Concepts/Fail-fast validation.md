@@ -18,7 +18,7 @@ tags:
 
 ## Why early failure is valuable
 
-Suppose a server advertises presigned-only transfer but its artifact backend cannot create [[Presigned URLs]]. Without startup validation:
+Suppose a server advertises presigned-only transfer but its artifact backend cannot create [Presigned URLs](Presigned%20URLs.md). Without startup validation:
 
 1. deployment appears healthy;
 2. users can create runs;
@@ -40,14 +40,14 @@ def validate_server_config(config, artifact_repository):
 
 - mutually incompatible options;
 - required credentials or dependencies that can be checked safely;
-- selected implementation satisfies a required [[Capability]];
+- selected implementation satisfies a required [Capability](Capability.md);
 - values have valid syntax and range;
 - a security policy can actually be enforced.
 
 ## What may remain runtime-only
 
 - temporary network reachability;
-- per-user [[Authorization]];
+- per-user [Authorization](Authorization.md);
 - object-specific permissions;
 - resources created after startup;
 - transient provider failures.
@@ -64,13 +64,13 @@ Fail-fast does not mean “perform every possible operation during startup.” I
 
 ## In the MLflow work
 
-[[2026-07-26 - Add presigned artifact UI support]] validates the artifact backend when presigned-only mode is enabled. This aligns advertised [[Capability negotiation|capabilities]] with executable behavior.
+[2026-07-26 - Add presigned artifact UI support](../Tasks/2026-07-26%20-%20Add%20presigned%20artifact%20UI%20support.md) validates the artifact backend when presigned-only mode is enabled. This aligns advertised [capabilities](Capability%20negotiation.md) with executable behavior.
 
 ## Related concepts
 
-- [[Capability]]
-- [[Configuration ownership]]
-- [[Environment variable]]
-- [[Presigned URLs]]
-- [[Fallback behavior]]
+- [Capability](Capability.md)
+- [Configuration ownership](Configuration%20ownership.md)
+- [Environment variable](Environment%20variable.md)
+- [Presigned URLs](Presigned%20URLs.md)
+- [Fallback behavior](Fallback%20behavior.md)
 

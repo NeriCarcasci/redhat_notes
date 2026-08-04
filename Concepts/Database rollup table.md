@@ -49,7 +49,7 @@ Rollups can combine partitions only when sufficient intermediate state is stored
 | Exact percentile | raw distribution or equivalent exact state | Not derivable from daily percentile scalars |
 | Distinct count | exact set or mergeable sketch | Not derivable from daily counts |
 
-This is why RFC 0006 keeps distinct session counts raw and limits stored exact p50/p90/p99 values to matching complete-day requests; see [[Percentile aggregation]].
+This is why RFC 0006 keeps distinct session counts raw and limits stored exact p50/p90/p99 values to matching complete-day requests; see [Percentile aggregation](Percentile%20aggregation.md).
 
 ## Hybrid query routing
 
@@ -67,7 +67,7 @@ flowchart TD
     RAW --> MERGE
 ```
 
-The first and last partial days stay raw. Complete middle days may use rollups independently. Missing rows or [[Rollup invalidation|invalid partitions]] also fall back to raw data. The ranges must not overlap, or the final aggregate double-counts source rows.
+The first and last partial days stay raw. Complete middle days may use rollups independently. Missing rows or [invalid partitions](Rollup%20invalidation.md) also fall back to raw data. The ranges must not overlap, or the final aggregate double-counts source rows.
 
 ## Publication and freshness
 
@@ -91,7 +91,7 @@ Rollups are disabled by default. `MLFLOW_SQL_TRACE_ROLLUPS_ENABLED` opts into qu
 
 ## Boundaries and pitfalls
 
-- A rollup is not the [[Authoritative data representation]] for arbitrary queries; its authority is limited to declared grain, dimensions, aggregate semantics, and valid partitions.
+- A rollup is not the [Authoritative data representation](Authoritative%20data%20representation.md) for arbitrary queries; its authority is limited to declared grain, dimensions, aggregate semantics, and valid partitions.
 - High-cardinality grouping can make the summary nearly as large as the detail table.
 - Late data, deletes, moves, and corrections require old and new partition invalidation.
 - Rebuilding too eagerly increases write and compute cost; rebuilding too slowly shifts more reads to the raw path.
@@ -101,15 +101,15 @@ Rollups are disabled by default. `MLFLOW_SQL_TRACE_ROLLUPS_ENABLED` opts into qu
 
 ## In the work
 
-In [[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]], denormalized columns first reduce join cost. Rollups are the second layer for repeated aggregation over millions of already-denormalized rows. RHOAIENG-78201 owns construction and routing; RHOAIENG-78203 owns external scheduling.
+In [2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization](../Tasks/2026-07-31%20-%20Implement%20RFC%200006%20PostgreSQL%20trace%20analytics%20optimization.md), denormalized columns first reduce join cost. Rollups are the second layer for repeated aggregation over millions of already-denormalized rows. RHOAIENG-78201 owns construction and routing; RHOAIENG-78203 owns external scheduling.
 
 ## Related concepts
 
-- [[Database denormalization]]
-- [[Rollup invalidation]]
-- [[Percentile aggregation]]
-- [[Query execution plan]]
-- [[Data migration validation]]
+- [Database denormalization](Database%20denormalization.md)
+- [Rollup invalidation](Rollup%20invalidation.md)
+- [Percentile aggregation](Percentile%20aggregation.md)
+- [Query execution plan](Query%20execution%20plan.md)
+- [Data migration validation](Data%20migration%20validation.md)
 
 ## Further reading
 

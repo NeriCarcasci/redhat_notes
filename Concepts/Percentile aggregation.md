@@ -87,18 +87,18 @@ Multi-day requests still consist of individual daily buckets, so each stored dai
 - Merging histograms is valid only when bucket definitions and value domains are compatible.
 - Approximation error should be stated in rank or value terms and tested on skewed distributions.
 - Null, non-finite, and type-coercion rules must match between raw and rollup construction.
-- A valid stored percentile can become stale after a late write and therefore still requires [[Rollup invalidation]].
+- A valid stored percentile can become stale after a late write and therefore still requires [Rollup invalidation](Rollup%20invalidation.md).
 
 ## In the work
 
-[[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]] keeps exact percentile semantics by restricting rollup eligibility instead of trying to combine daily percentile scalars. Unsupported shapes fall back to raw queries.
+[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization](../Tasks/2026-07-31%20-%20Implement%20RFC%200006%20PostgreSQL%20trace%20analytics%20optimization.md) keeps exact percentile semantics by restricting rollup eligibility instead of trying to combine daily percentile scalars. Unsupported shapes fall back to raw queries.
 
 ## Related concepts
 
-- [[Database rollup table]]
-- [[Rollup invalidation]]
-- [[Query execution plan]]
-- [[Data migration validation]]
+- [Database rollup table](Database%20rollup%20table.md)
+- [Rollup invalidation](Rollup%20invalidation.md)
+- [Query execution plan](Query%20execution%20plan.md)
+- [Data migration validation](Data%20migration%20validation.md)
 
 ## Further reading
 

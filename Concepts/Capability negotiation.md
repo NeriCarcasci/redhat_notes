@@ -16,7 +16,7 @@ tags:
 > [!definition]
 > Capability negotiation is a protocol in which participants discover supported behavior and choose a mutually compatible path.
 
-A [[Capability]] describes what a component can do. Negotiation turns that description into a runtime decision, which is especially useful during rolling upgrades and mixed client/server versions.
+A [Capability](Capability.md) describes what a component can do. Negotiation turns that description into a runtime decision, which is especially useful during rolling upgrades and mixed client/server versions.
 
 ## The three-state problem
 
@@ -28,7 +28,7 @@ For compatibility, a client often needs more than a Boolean:
 | Property is `false` | Server explicitly does not support feature | Use allowed old path or fail |
 | Endpoint/property absent | Older server; capability is unknown | Apply documented legacy behavior |
 
-Conflating “absent” with “false” can break [[Backward compatibility]]. Conflating “false” with a transient discovery error can produce unsafe [[Fallback behavior]].
+Conflating “absent” with “false” can break [Backward compatibility](Backward%20compatibility.md). Conflating “false” with a transient discovery error can produce unsafe [Fallback behavior](Fallback%20behavior.md).
 
 ## MLflow example
 
@@ -43,7 +43,7 @@ flowchart TD
     D -- "Unsupported" --> G["Use permitted fallback or fail"]
 ```
 
-The response belongs to the server-client protocol. A client should not infer the server's state from a local [[Environment variable]]; that would violate [[Configuration ownership]].
+The response belongs to the server-client protocol. A client should not infer the server's state from a local [Environment variable](Environment%20variable.md); that would violate [Configuration ownership](Configuration%20ownership.md).
 
 ## Caching
 
@@ -68,14 +68,14 @@ This connects the UI work to the centralized `/server-info` work in PR #24678.
 
 ## In the MLflow work
 
-[[2026-07-26 - Add presigned artifact UI support]] requires capability discovery for all artifact sizes. A server that requires presigned transfer cannot allow the client to skip discovery and use a legacy route for small files.
+[2026-07-26 - Add presigned artifact UI support](../Tasks/2026-07-26%20-%20Add%20presigned%20artifact%20UI%20support.md) requires capability discovery for all artifact sizes. A server that requires presigned transfer cannot allow the client to skip discovery and use a legacy route for small files.
 
 ## Related concepts
 
-- [[Capability]]
-- [[Backward compatibility]]
-- [[Fallback behavior]]
-- [[Client-server model]]
-- [[Configuration ownership]]
-- [[Fail-fast validation]]
+- [Capability](Capability.md)
+- [Backward compatibility](Backward%20compatibility.md)
+- [Fallback behavior](Fallback%20behavior.md)
+- [Client-server model](Client-server%20model.md)
+- [Configuration ownership](Configuration%20ownership.md)
+- [Fail-fast validation](Fail-fast%20validation.md)
 

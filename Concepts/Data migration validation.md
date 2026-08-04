@@ -108,15 +108,15 @@ Validation queries can themselves be expensive. They should use the same bounded
 
 ## In the work
 
-[[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]] requires revision `75868b020152` to validate before deleting duplicate tags, metadata, metrics, or `dimension_attributes`. [[2026-07-31 - Prepopulate denormalized trace analytics]] may reduce the migration's rewrite volume, but its successful completion is not the global validation event.
+[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization](../Tasks/2026-07-31%20-%20Implement%20RFC%200006%20PostgreSQL%20trace%20analytics%20optimization.md) requires revision `75868b020152` to validate before deleting duplicate tags, metadata, metrics, or `dimension_attributes`. [2026-07-31 - Prepopulate denormalized trace analytics](../Tasks/2026-07-31%20-%20Prepopulate%20denormalized%20trace%20analytics.md) may reduce the migration's rewrite volume, but its successful completion is not the global validation event.
 
 ## Related concepts
 
-- [[Database backfill]]
-- [[Online schema migration]]
-- [[Database denormalization]]
-- [[Authoritative data representation]]
-- [[Transaction boundary]]
+- [Database backfill](Database%20backfill.md)
+- [Online schema migration](Online%20schema%20migration.md)
+- [Database denormalization](Database%20denormalization.md)
+- [Authoritative data representation](Authoritative%20data%20representation.md)
+- [Transaction boundary](Transaction%20boundary.md)
 
 ## Further reading
 

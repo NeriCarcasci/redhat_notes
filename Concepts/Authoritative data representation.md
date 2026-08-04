@@ -50,21 +50,21 @@ After step 2, a writer that recreates only the old metadata row is incorrect eve
 
 - “Source of truth” is meaningless unless reads, writes, conflict handling, cleanup, and reconstruction all follow it.
 - Dual writes do not create two authorities; they create one authority plus a consistency obligation.
-- A derived representation may be the fastest read path without owning the fact. A [[Database rollup table]] is authoritative only for its declared covered partition and aggregate semantics.
-- Deleting the old representation before [[Data migration validation]] can make disagreement impossible to diagnose or repair.
+- A derived representation may be the fastest read path without owning the fact. A [Database rollup table](Database%20rollup%20table.md) is authoritative only for its declared covered partition and aggregate semantics.
+- Deleting the old representation before [Data migration validation](Data%20migration%20validation.md) can make disagreement impossible to diagnose or repair.
 - Compatibility synthesis must preserve observable semantics, including deletion, null, and empty-value distinctions.
 
 ## In the work
 
-[[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization]] changes authority for trace name, session, reserved tokens, trace costs, span costs, and model/provider dimensions. PR #24760 implements the read/write retargeting and compatibility synthesis that turns new columns from backfilled copies into the owning representation.
+[2026-07-31 - Implement RFC 0006 PostgreSQL trace analytics optimization](../Tasks/2026-07-31%20-%20Implement%20RFC%200006%20PostgreSQL%20trace%20analytics%20optimization.md) changes authority for trace name, session, reserved tokens, trace costs, span costs, and model/provider dimensions. PR #24760 implements the read/write retargeting and compatibility synthesis that turns new columns from backfilled copies into the owning representation.
 
 ## Related concepts
 
-- [[Database denormalization]]
-- [[Backward compatibility]]
-- [[Online schema migration]]
-- [[Data migration validation]]
-- [[Database rollup table]]
+- [Database denormalization](Database%20denormalization.md)
+- [Backward compatibility](Backward%20compatibility.md)
+- [Online schema migration](Online%20schema%20migration.md)
+- [Data migration validation](Data%20migration%20validation.md)
+- [Database rollup table](Database%20rollup%20table.md)
 
 ## Further reading
 

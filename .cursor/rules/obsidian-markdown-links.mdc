@@ -1,0 +1,17 @@
+---
+description: Use GitHub-friendly Markdown links in vault notes
+globs: **/*.md
+alwaysApply: false
+---
+
+# Obsidian Markdown Links
+
+- Write note links as standard Markdown links, not Obsidian `[[wikilinks]]`.
+- Use relative paths to the target note and keep the `.md` extension.
+- Preserve a readable label. For alias-style links, use the alias as the link text.
+- When editing existing notes, convert new or touched wikilinks to Markdown links instead of adding more wikilinks.
+
+Examples:
+
+- Use `[Authentication](Authentication.md)` instead of `[[Authentication]]`.
+- Use `[transaction](Transaction%20boundary.md)` instead of `[[Transaction boundary|transaction]]`.

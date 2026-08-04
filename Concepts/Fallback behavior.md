@@ -16,14 +16,14 @@ tags:
 > [!definition]
 > Fallback behavior selects an older, simpler, or alternate path when the preferred path is unavailable.
 
-Fallback supports [[Backward compatibility]], but it can also hide defects or violate policy. A safe design defines exactly which evidence permits it.
+Fallback supports [Backward compatibility](Backward%20compatibility.md), but it can also hide defects or violate policy. A safe design defines exactly which evidence permits it.
 
 ## Decision table
 
 | Situation | Safe default |
 |---|---|
 | Old server has no discovery endpoint | Use documented legacy behavior |
-| Server explicitly supports presigned transfer | Use [[Presigned URLs]] |
+| Server explicitly supports presigned transfer | Use [Presigned URLs](Presigned%20URLs.md) |
 | Server explicitly requires presigned transfer | Never use legacy proxy |
 | Server explicitly says capability unsupported | Use legacy only if policy permits |
 | Discovery returns transient 500 or network error | Surface or retry; do not silently reinterpret policy |
@@ -51,7 +51,7 @@ Treating all non-success cases as “use legacy” creates a fail-open system. A
 
 - Which exact error or response triggers it?
 - Is the alternate path semantically equivalent?
-- Could it weaken [[Authorization]] or another security guarantee?
+- Could it weaken [Authorization](Authorization.md) or another security guarantee?
 - Is the operation safe to retry?
 - Will telemetry reveal that fallback occurred?
 - When can the fallback be removed?
@@ -62,13 +62,13 @@ The client should not bounce indefinitely between new and legacy paths. Record t
 
 ## In the MLflow work
 
-[[2026-07-26 - Add presigned artifact UI support]] preserves legacy behavior for old servers but prevents fallback when `/server-info` says presigned transfer is required. Even small uploads must perform [[Capability negotiation]].
+[2026-07-26 - Add presigned artifact UI support](../Tasks/2026-07-26%20-%20Add%20presigned%20artifact%20UI%20support.md) preserves legacy behavior for old servers but prevents fallback when `/server-info` says presigned transfer is required. Even small uploads must perform [Capability negotiation](Capability%20negotiation.md).
 
 ## Related concepts
 
-- [[Backward compatibility]]
-- [[Capability negotiation]]
-- [[Fail-fast validation]]
-- [[Authorization]]
-- [[HTTP 426 Upgrade Required]]
+- [Backward compatibility](Backward%20compatibility.md)
+- [Capability negotiation](Capability%20negotiation.md)
+- [Fail-fast validation](Fail-fast%20validation.md)
+- [Authorization](Authorization.md)
+- [HTTP 426 Upgrade Required](HTTP%20426%20Upgrade%20Required.md)
 

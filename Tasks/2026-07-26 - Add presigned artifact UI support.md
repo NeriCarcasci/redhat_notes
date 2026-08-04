@@ -18,7 +18,7 @@ sources:
 
 ## Objective
 
-Allow the MLflow UI and Python artifact client to use backend-generated [[Presigned URLs]], and add a server mode that requires presigned artifact transfer instead of legacy proxy upload and download routes.
+Allow the MLflow UI and Python artifact client to use backend-generated [Presigned URLs](../Concepts/Presigned%20URLs.md), and add a server mode that requires presigned artifact transfer instead of legacy proxy upload and download routes.
 
 ## Context
 
@@ -38,9 +38,9 @@ Allow the MLflow UI and Python artifact client to use backend-generated [[Presig
 - Rejected presigned-only startup when the selected artifact backend cannot generate the required signed URLs.
 - Parsed `MLFLOW_ARTIFACTS_ONLY_PRESIGNED=false` as false in both Click-driven startup and worker configuration.
 - Prevented a server-only environment variable from silently changing Python client policy.
-- Required small uploads to perform [[Capability negotiation]] instead of falling through to legacy upload behavior.
+- Required small uploads to perform [Capability negotiation](../Concepts/Capability%20negotiation.md) instead of falling through to legacy upload behavior.
 - Streamed downloads directly when server metadata does not include `file_size`.
-- Returned actionable [[HTTP 426 Upgrade Required]] responses from legacy artifact-service upload and download routes in presigned-only mode.
+- Returned actionable [HTTP 426 Upgrade Required](../Concepts/HTTP%20426%20Upgrade%20Required.md) responses from legacy artifact-service upload and download routes in presigned-only mode.
 - Kept logged-model and model-version tracking routes available because they are outside the legacy artifact-service proxy boundary and have no equivalent replacement in this change.
 
 ## Important decisions
@@ -48,7 +48,7 @@ Allow the MLflow UI and Python artifact client to use backend-generated [[Presig
 - The server advertises capabilities through `/server-info`; clients derive behavior from that response rather than reading a server configuration variable from their own environment.
 - Presigned-only mode fails at startup if the artifact backend cannot fulfill the advertised contract.
 - All uploads, including small ones, must honor server capabilities so a presigned-only server is never contacted through a forbidden legacy route.
-- A missing `file_size` is not a reason to reject a valid signed download; use [[Streaming HTTP downloads]] without preallocation.
+- A missing `file_size` is not a reason to reject a valid signed download; use [Streaming HTTP downloads](../Concepts/Streaming%20HTTP%20downloads.md) without preallocation.
 - Only legacy artifact-service proxy routes return 426. Tracking APIs for logged models and model versions remain available.
 - Preserve explicit fallback behavior for servers that do not advertise presigned support, while preventing fallback when the server explicitly requires presigned transfer.
 
@@ -76,13 +76,13 @@ The two local commits are pushed to `origin/feat/presigned-artifact-ui`. The tas
 
 ## Concepts encountered
 
-- [[Presigned URLs]]
-- [[Capability negotiation]]
-- [[Configuration ownership]]
-- [[Fail-fast validation]]
-- [[HTTP 426 Upgrade Required]]
-- [[Streaming HTTP downloads]]
-- [[Fallback behavior]]
+- [Presigned URLs](../Concepts/Presigned%20URLs.md)
+- [Capability negotiation](../Concepts/Capability%20negotiation.md)
+- [Configuration ownership](../Concepts/Configuration%20ownership.md)
+- [Fail-fast validation](../Concepts/Fail-fast%20validation.md)
+- [HTTP 426 Upgrade Required](../Concepts/HTTP%20426%20Upgrade%20Required.md)
+- [Streaming HTTP downloads](../Concepts/Streaming%20HTTP%20downloads.md)
+- [Fallback behavior](../Concepts/Fallback%20behavior.md)
 
 ## Follow-up
 

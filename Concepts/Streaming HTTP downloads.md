@@ -37,7 +37,7 @@ Memory use is approximately bounded by the chunk and library buffers rather than
 
 ## `Content-Length` is helpful, not always required
 
-[[Content-Length]] enables:
+[Content-Length](Content-Length.md) enables:
 
 - progress percentages;
 - early capacity checks;
@@ -48,16 +48,16 @@ But HTTP can carry a response without a known length, for example when generated
 
 ## Backpressure
 
-[[Backpressure]] is the mechanism by which a slow consumer limits how quickly upstream data is accepted. Awaiting each read/write cycle naturally provides some flow control. If code launches unbounded writes or queues chunks indefinitely, it loses the memory benefit of streaming.
+[Backpressure](Backpressure.md) is the mechanism by which a slow consumer limits how quickly upstream data is accepted. Awaiting each read/write cycle naturally provides some flow control. If code launches unbounded writes or queues chunks indefinitely, it loses the memory benefit of streaming.
 
 ## Failure handling
 
-- Write to a temporary file and publish with an [[Atomic filesystem operation]] after success.
+- Write to a temporary file and publish with an [Atomic filesystem operation](Atomic%20filesystem%20operation.md) after success.
 - Clean up partial output on failure.
 - Set connection and read timeouts.
 - Decide whether retries restart the download or use HTTP range requests.
 - Verify checksum or expected size when supplied.
-- Avoid logging a [[Presigned URLs|presigned URL]].
+- Avoid logging a [presigned URL](Presigned%20URLs.md).
 
 ## Browser considerations
 
@@ -65,13 +65,13 @@ Browser media elements can often stream from a URL directly. If JavaScript fetch
 
 ## In the MLflow work
 
-[[2026-07-26 - Add presigned artifact UI support]] accepts a valid signed download response without `file_size` and streams until completion instead of rejecting the transfer.
+[2026-07-26 - Add presigned artifact UI support](../Tasks/2026-07-26%20-%20Add%20presigned%20artifact%20UI%20support.md) accepts a valid signed download response without `file_size` and streams until completion instead of rejecting the transfer.
 
 ## Related concepts
 
-- [[Backpressure]]
-- [[Content-Length]]
-- [[Presigned URLs]]
-- [[Atomic filesystem operation]]
-- [[HTTP status code]]
+- [Backpressure](Backpressure.md)
+- [Content-Length](Content-Length.md)
+- [Presigned URLs](Presigned%20URLs.md)
+- [Atomic filesystem operation](Atomic%20filesystem%20operation.md)
+- [HTTP status code](HTTP%20status%20code.md)
 

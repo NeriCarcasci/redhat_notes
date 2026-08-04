@@ -41,20 +41,20 @@ The final pass must still search for unresolved rows. A new trace inserted with 
 - Very small batches add round trips and commit overhead. Batch size is an operational control, not a universal constant.
 - Row counts can agree while values are semantically wrong; validation should compare derived content or explicit invariants.
 - A read-then-write implementation can overwrite concurrent changes unless updates are conditional and the source-of-truth rule is clear.
-- Retrying is safe only if the operation has [[Idempotency]] and does not compound side effects.
+- Retrying is safe only if the operation has [Idempotency](Idempotency.md) and does not compound side effects.
 - Backfill code is production code: it needs tests, progress reporting, failure diagnostics, and a supported invocation path.
 
 ## In the work
 
-The utility in [[2026-07-31 - Prepopulate denormalized trace analytics]] is a live backfill separated from the final migration. The ticket exists because rewriting large trace histories synchronously during upgrade can make the maintenance window unacceptable.
+The utility in [2026-07-31 - Prepopulate denormalized trace analytics](../Tasks/2026-07-31%20-%20Prepopulate%20denormalized%20trace%20analytics.md) is a live backfill separated from the final migration. The ticket exists because rewriting large trace histories synchronously during upgrade can make the maintenance window unacceptable.
 
 ## Related concepts
 
-- [[Online schema migration]]
-- [[Keyset pagination]]
-- [[Transaction boundary]]
-- [[Idempotency]]
-- [[Data migration validation]]
+- [Online schema migration](Online%20schema%20migration.md)
+- [Keyset pagination](Keyset%20pagination.md)
+- [Transaction boundary](Transaction%20boundary.md)
+- [Idempotency](Idempotency.md)
+- [Data migration validation](Data%20migration%20validation.md)
 
 ## Further reading
 

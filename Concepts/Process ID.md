@@ -12,16 +12,16 @@ tags:
 # Process ID
 
 > [!definition]
-> A process ID, or PID, is a positive integer that identifies a [[Process]] during its lifetime.
+> A process ID, or PID, is a positive integer that identifies a [Process](Process.md) during its lifetime.
 
-PIDs are useful for inspection, waiting, and sending [[Unix signal|signals]], but they are temporary names rather than permanent identities. After a process terminates and is reaped, the operating system may assign the same number to another process; see [[PID reuse]].
+PIDs are useful for inspection, waiting, and sending [signals](Unix%20signal.md), but they are temporary names rather than permanent identities. After a process terminates and is reaped, the operating system may assign the same number to another process; see [PID reuse](PID%20reuse.md).
 
-In a [[POSIX process groups|process group]], the process-group leader's PID is equal to the group's PGID.
+In a [process group](POSIX%20process%20groups.md), the process-group leader's PID is equal to the group's PGID.
 
 ## Related concepts
 
-- [[Process]]
-- [[PID reuse]]
-- [[Process reaping]]
-- [[TOCTOU race]]
+- [Process](Process.md)
+- [PID reuse](PID%20reuse.md)
+- [Process reaping](Process%20reaping.md)
+- [TOCTOU race](TOCTOU%20race.md)
 

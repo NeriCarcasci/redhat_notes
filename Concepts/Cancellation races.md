@@ -16,7 +16,7 @@ tags:
 > [!definition]
 > A cancellation race occurs when a request to cancel work overlaps with that work completing, failing, or timing out. More than one actor competes to choose the terminal state.
 
-This is a specialized [[Race condition]]. It cannot be solved merely by “checking first,” because the state may change immediately after the check.
+This is a specialized [Race condition](Race%20condition.md). It cannot be solved merely by “checking first,” because the state may change immediately after the check.
 
 ## Competing histories
 
@@ -37,7 +37,7 @@ A correct state machine makes terminal states final. Exactly one transition out 
 
 ## Linearization
 
-The operation needs a [[Linearization point]]: one conceptual instant at which the system commits to a terminal outcome.
+The operation needs a [Linearization point](Linearization%20point.md): one conceptual instant at which the system commits to a terminal outcome.
 
 ```python
 with record.lock:
@@ -69,21 +69,21 @@ Good APIs document whether `cancel()` means “request cancellation” or guaran
 
 Cancellation involves two layers:
 
-1. Logical state protected by [[Mutual exclusion]].
-2. Physical termination using [[Unix signal|signals]], often against [[POSIX process groups]].
+1. Logical state protected by [Mutual exclusion](Mutual%20exclusion.md).
+2. Physical termination using [signals](Unix%20signal.md), often against [POSIX process groups](POSIX%20process%20groups.md).
 
-The physical signal can itself lose to process completion or encounter [[PID reuse]]. The logical state machine must remain correct in every case.
+The physical signal can itself lose to process completion or encounter [PID reuse](PID%20reuse.md). The logical state machine must remain correct in every case.
 
 ## In the MLflow work
 
-In [[2026-07-28 - Implement LocalJobExecutor]], cancellation rolls back its tentative canceled state when process termination was not delivered, then returns the actual completed result. Timeout messages remain separate and include the job identity and configured duration.
+In [2026-07-28 - Implement LocalJobExecutor](../Tasks/2026-07-28%20-%20Implement%20LocalJobExecutor.md), cancellation rolls back its tentative canceled state when process termination was not delivered, then returns the actual completed result. Timeout messages remain separate and include the job identity and configured duration.
 
 ## Related concepts
 
-- [[Race condition]]
-- [[Linearization point]]
-- [[Mutual exclusion]]
-- [[PID reuse]]
-- [[POSIX process groups]]
-- [[Idempotency]]
+- [Race condition](Race%20condition.md)
+- [Linearization point](Linearization%20point.md)
+- [Mutual exclusion](Mutual%20exclusion.md)
+- [PID reuse](PID%20reuse.md)
+- [POSIX process groups](POSIX%20process%20groups.md)
+- [Idempotency](Idempotency.md)
 

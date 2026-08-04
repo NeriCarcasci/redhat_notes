@@ -62,29 +62,29 @@ The exception cleanup improves normal failure handling. The marker protects reco
 
 ## Durability caveat
 
-“Written” is not always the same as [[Durable state|durable]]. Operating systems and storage devices buffer writes. Strong crash guarantees may require flushing file data and directory metadata. The right strength depends on the cost of false completeness and the storage system.
+“Written” is not always the same as [durable](Durable%20state.md). Operating systems and storage devices buffer writes. Strong crash guarantees may require flushing file data and directory metadata. The right strength depends on the cost of false completeness and the storage system.
 
 ## Alternative patterns
 
-- Build a complete replacement and publish it with an [[Atomic filesystem operation|atomic rename]].
+- Build a complete replacement and publish it with an [atomic rename](Atomic%20filesystem%20operation.md).
 - Use a database transaction or journal.
 - Record a version/checksum manifest and validate it on startup.
 
-For Python virtual environments, building elsewhere and renaming can be unsafe because generated files may contain absolute paths. [[2026-07-28 - Implement LocalJobExecutor]] therefore builds at the final path and uses [[File locking]] plus an incomplete marker.
+For Python virtual environments, building elsewhere and renaming can be unsafe because generated files may contain absolute paths. [2026-07-28 - Implement LocalJobExecutor](../Tasks/2026-07-28%20-%20Implement%20LocalJobExecutor.md) therefore builds at the final path and uses [File locking](File%20locking.md) plus an incomplete marker.
 
 ## Relationship to idempotency
 
 - Crash consistency makes interrupted state detectable.
-- [[Idempotent setup]] makes retry or repair safe.
-- [[File locking]] prevents multiple repairers from acting simultaneously.
+- [Idempotent setup](Idempotent%20setup.md) makes retry or repair safe.
+- [File locking](File%20locking.md) prevents multiple repairers from acting simultaneously.
 
 The three properties complement rather than replace each other.
 
 ## Related concepts
 
-- [[Durable state]]
-- [[Atomic filesystem operation]]
-- [[File locking]]
-- [[Idempotency]]
-- [[Idempotent setup]]
+- [Durable state](Durable%20state.md)
+- [Atomic filesystem operation](Atomic%20filesystem%20operation.md)
+- [File locking](File%20locking.md)
+- [Idempotency](Idempotency.md)
+- [Idempotent setup](Idempotent%20setup.md)
 
